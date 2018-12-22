@@ -1,0 +1,249 @@
+{% load static from staticfiles %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %} {%endblock%} </title>
+<!-- favicon
+============================================ -->
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico'%}">
+<!-- Google Fonts
+============================================ -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+<!-- Bootstrap CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+<!-- Bootstrap CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
+<!-- nalika Icon CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/nalika-icon.css'%}">
+<!-- owl.carousel CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/owl.carousel.css'%}">
+<link rel="stylesheet" href="{% static 'css/owl.theme.css'%}">
+<link rel="stylesheet" href="{% static 'css/owl.transitions.css'%}">
+<!-- animate CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/animate.css'%}">
+<!-- normalize CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/normalize.css'%}">
+<!-- meanmenu icon CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/meanmenu.min.css'%}">
+<!-- main CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/main.css'%}">
+<!-- morrisjs CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/morrisjs/morris.css'%}">
+<!-- mCustomScrollbar CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/scrollbar/jquery.mCustomScrollbar.min.css'%}">
+<!-- metisMenu CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/metisMenu/metisMenu.min.css'%}">
+<link rel="stylesheet" href="{% static 'css/metisMenu/metisMenu-vertical.css'%}">
+	<!--
+	============================================ -->
+        {% block style %}
+
+        {% endblock %}
+<!-- style CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/style.css'%}">
+<!-- responsive CSS
+============================================ -->
+<link rel="stylesheet" href="{% static 'css/responsive.css'%}">
+<!-- modernizr JS
+============================================ -->
+<script src="{% static 'js/vendor/modernizr-2.8.3.min.js'%}"></script>
+
+
+</head>
+<body>
+<!-- sidebar starts down here-->
+        <div class="left-sidebar-pro">
+            <nav id="sidebar" class="">
+                <div class="sidebar-header">
+                    <a href="index.html">
+                    CLEARANCE
+                      {% comment %}  <img class="main-logo" src="/static/img/logo/logo.png" alt="" />{% endcomment %}
+                    </a>
+                    <strong><img src="{% static 'img/logo/logosn.png' %}" alt="" /></strong>
+                </div>
+
+<div class="left-custom-menu-adp-wrap comment-scrollbar">
+	<nav class="sidebar-nav left-sidebar-menu-pro">
+
+   <ul class="metismenu" id="menu1">
+
+                {% block module_nav %}
+
+                {%endblock%}
+                 </ul>
+    </nav>
+</div>
+            </nav>
+        </div>
+<!-- sidebar ends up here -->
+    <div class="all-content-wrapper">
+
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="logo-pro">
+                    <a href="index.html"><img class="main-logo" src="{% static 'img/logo/logo.png' %}" alt="" /></a>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <div class="header-advance-area">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <!-- top  right starts here -->
+                <div class="header-top-wraper">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-right-info">
+                                <ul class="nav navbar-nav mai-top-nav header-right-menu">
+
+                    <!-- account part-->
+                        <li class="nav-item">
+                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                            <i class="icon nalika-user"></i>
+                            <span class="admin-name">Beedy</span>
+                            <i class="icon nalika-down-arrow nalika-angle-dw"></i>
+                            </a>
+                            <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                                    <li><a href="register.html"><span class="icon nalika-home author-log-ic"></span> Register</a>
+                                    </li>
+                                    <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My Profile</a>
+                                    </li>
+                                    <li><a href="lock.html"><span class="icon nalika-diamond author-log-ic"></span> Lock</a>
+                                    </li>
+                                    <li><a href="#"><span class="icon nalika-settings author-log-ic"></span> Settings</a>
+                                    </li>
+                                    <li><a href="login.html"><span class="icon nalika-unlocked author-log-ic"></span> Log Out</a>
+                                    </li>
+                            </ul>
+                        </li>
+
+                    <!--account ends here -->
+
+                                </ul>
+                           </div>
+                        </div>
+
+                     </div>
+               </div>
+            <!-- top right gone -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Mobile Menu end -->
+<div class="breadcome-area">
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="breadcome-list">
+            {# create the pageinfo block#}
+                {% block pageinfo %}
+
+
+                {% endblock %}
+            </div>
+            </div>
+    </div>
+</div>
+</div>
+
+        </div>
+
+
+
+           <div class="section-admin container-fluid">
+                <!-- main contents here -->
+                {% block content %}
+
+
+                {%endblock%}
+           <!-- footer sgtarts here -->
+                <div class="footer-copyright-area">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="footer-copy-right">
+                                        <p>Copyright © 2018 <a href="https://colorlib.com/wp/templates/">Colorlib</a> All rights reserved.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+           <!-- footer ends up here -->
+            </div>
+
+    </div>
+
+<!-- jquery
+============================================ -->
+<script src="{% static 'js/vendor/jquery-1.12.4.min.js'%}"></script>
+<!-- bootstrap JS
+============================================ -->
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<!-- wow JS
+============================================ -->
+<script src="{% static 'js/wow.min.js'%}"></script>
+<!-- price-slider JS
+============================================ -->
+<script src="{% static 'js/jquery-price-slider.js'%}"></script>
+<!-- meanmenu JS
+============================================ -->
+<script src="{% static 'js/jquery.meanmenu.js'%}"></script>
+<!-- owl.carousel JS
+============================================ -->
+<script src="{% static 'js/owl.carousel.min.js'%}"></script>
+<!-- sticky JS
+============================================ -->
+<script src="{% static 'js/jquery.sticky.js'%}"></script>
+<!-- scrollUp JS
+============================================ -->
+<script src="{% static 'js/jquery.scrollUp.min.js'%}"></script>
+<!-- mCustomScrollbar JS
+============================================ -->
+<script src="{% static 'js/scrollbar/jquery.mCustomScrollbar.concat.min.js'%}"></script>
+<script src="{% static 'js/scrollbar/mCustomScrollbar-active.js'%}"></script>
+<!-- metisMenu JS
+============================================ -->
+<script src="{% static 'js/metisMenu/metisMenu.min.js'%}"></script>
+<script src="{% static 'js/metisMenu/metisMenu-active.js'%}"></script>
+<!-- sparkline JS
+============================================ -->
+<script src="{% static 'js/sparkline/jquery.sparkline.min.js'%}"></script>
+<script src="{% static 'js/sparkline/jquery.charts-sparkline.js'%}"></script>
+
+<!-- float JS
+============================================ -->
+<script src="{% static 'js/flot/jquery.flot.js'%}"></script>
+<script src="{% static 'js/flot/jquery.flot.resize.js'%}"></script>
+<script src="{% static 'js/flot/curvedLines.js'%}"></script>
+<script src="{% static 'js/flot/flot-active.js'%}"></script>
+<!-- plugins JS
+============================================ -->
+<script src="{% static 'js/plugi ns.js'%}"></script>
+<!-- main JS
+============================================ -->
+<script src="{% static 'js/main.js'%}"></script>
+</body>
+</html>
