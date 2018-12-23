@@ -20,7 +20,7 @@ def create_faculty(request):
     #         register.save()
     # return redirect('system:fac_create')
     table = FacultyTable(FacultyData.objects.all())
-    RequestConfig(request).configure(table)
+    RequestConfig(request, paginate={'per_page': 10 }).configure(table)
     context = {"form": FacultyCreationForm, 'faculty': table}
     return render(request, 'faculty/create.html', context)
 
