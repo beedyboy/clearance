@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_tables2',
-    'django-filters',
+    'django_filters',
     'account',
     'system',
     'lecturer',
@@ -135,3 +135,15 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT  = os.path.join(BASE_DIR,'media')
+
+#application settings
+
+CONFIG = {
+'app': {
+        'NAME': 'beedy clearance system',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}

@@ -9,6 +9,14 @@ class FacultyData(models.Model):
           return self.faculty_name
 
 
+class DepartmentData(models.Model):
+    fid = models.ForeignKey(FacultyData, on_delete=models.CASCADE)
+    dept_name = models.CharField(max_length=50, help_text="Department Name")
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.dept_name
+
 
 '''class RegistrationData(models.Model):
     #fid = models.ForeignKey()

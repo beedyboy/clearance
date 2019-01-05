@@ -1,16 +1,133 @@
-{% extends 'base_layout.html'%}
-    {%block title %}
-        Create Department
+{# extend the base layout by includeing it#}
+    {% extends 'base_layout.html'%}
+{# set the value of the page title#}
+   {%block title %}
+       Department | Create | View
     {%endblock%}
-{%block content %}
-<h1> Create a new Department</h1>
 
-<form action="">
+{# include extra css for datatable#}
+{% block style %}
 
-    {{forms.dept_name}}
+    {% comment %}<link rel="stylesheet" href="{% static 'css/data-table/bootstrap-table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/data-table/bootstrap-editable.css' %}">{% endcomment %}
+{% endblock %}
+{# include faculty module navigation menu#}
+    {% block module_nav %}
+        {% include 'fac_nav.html'%}
+
+    {%endblock%}
+
+{# include page breadcrum information#}
+    {% block pageinfo %}
+     <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="breadcomb-wp">
+                    <div class="breadcomb-icon">
+                    <i class="icon nalika-home"></i>
+                    </div>
+                        <div class="breadcomb-ctn">
+                            <h2>Department Management</h2>
+                             <p>{{ app.app.NAME }}</p>
+                        </div>
+                </div>
+           </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <ul class="breadcome-menu">
+                    <li><a href="#">create</a> <span class="bread-slash">/</span>
+                    </li>
+                    <li><span class="bread-blod">view</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    {% endblock %}
+{#include the page main content#}
+    {%block content %}
+
+         <div class="container-fluid">
+
+          <div class="row">
+    <!-- create faculty here -->
+                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="sparkline9-list mt-b-30">
+    <div class="sparkline9-hd">
+    <div class="main-sparkline9-hd">
+    <h2>Create New Department</h2>
+    </div>
+    </div>
+    <div class="sparkline9-graph">
+    <div class="basic-login-form-ad">
+
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="basic-login-inner">
 
 
-</form>
+        <div>
+            {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+           <li>
+                <div class="alert alert-{{ msg.level_tag }}" role="alert">
+                {{ msg.message }}
+            </div>
+           </li>
+            {% endfor %}
+
+            </ul>
+
+            {% endif %}
+        </div>
 
 
-{%endblock%}
+    <form action="{% url 'system:addDept' %}" method="post">
+
+        {% csrf_token %}
+    <div class="form-group-inner">
+    <label>Faculty Name</label>
+      {{form.fid}}
+    </div>
+  <div class="form-group-inner">
+    <label>Department Name</label>
+      {{form.dept_name}}
+    </div>
+
+    <div class="login-btn-inner">
+    <div class="inline-remember-me">
+    <button class="btn btn-sm btn-primary pull-right login-submit-cs" type="submit">Save</button>
+
+    </div>
+    </div>
+    </form>
+
+
+    </div>
+    </div>
+
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+                 </div>
+    <!-- create faculty here -->
+{% load render_table from django_tables2 %}
+                       <!-- show data -->
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+{% render_table faculty %}
+
+                        </div>
+              <!-- show ends here --->
+          </div>
+
+
+        </div>
+
+
+
+    </form>
+
+
+    {%endblock%}

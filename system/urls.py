@@ -4,7 +4,14 @@ from . import views
 app_name = 'system'
 
 urlpatterns = [
-    path('department/new', views.create_dept, name ="dept_create"),
-    path('', views.create_faculty, name="fac_create"),
-    path('faculty/add', views.add_faculty, name="addFaculty"),
+    path('', views.create_faculty, name="fac_create"), #for url like system/
+    path('faculty', views.view_faculty, name="fac_view"), #for url like system/faculty
+    path('faculty/<int:id>/edit', views.fac_link_edit, name="fac_link_edit"), #for url like system/faculty
+    path('faculty/<int:id>/view', views.fac_link_view, name="fac_link_view"), #for url like system/faculty
+    path('faculty/new', views.create_faculty, name="fac_create"),#for url like system/faculty/new
+    path('faculty/save', views.add_faculty, name="addFaculty"),#for url like system/faculty/new
+
+
+    path('department/new', views.create_dept, name ="dept_create"), #for url like system/department/new
+    path('department/save', views.create_dept, name ="addDept"), #for url like system/department/new
 ]
