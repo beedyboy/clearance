@@ -2,7 +2,7 @@
     {% extends 'base_layout.html'%}
 {# set the value of the page title#}
    {%block title %}
-       Faculty | Create | View
+       Semester | Create | View | Edit
     {%endblock%}
 
 {# include extra css for datatable#}
@@ -26,7 +26,7 @@
                     <i class="icon nalika-home"></i>
                     </div>
                         <div class="breadcomb-ctn">
-                            <h2>Faculty Management</h2>
+                            <h2>Semester Management</h2>
                             <p>{{ app.app.NAME }}</p>
                         </div>
                 </div>
@@ -48,12 +48,12 @@
          <div class="container-fluid">
 
           <div class="row">
-    <!-- create faculty here -->
+    <!-- create Semester here -->
                  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
     <div class="sparkline9-list mt-b-30">
     <div class="sparkline9-hd">
     <div class="main-sparkline9-hd">
-    <h2>Update Faculty</h2>
+    <h2>Create New Semester</h2>
     </div>
     </div>
     <div class="sparkline9-graph">
@@ -81,12 +81,17 @@
         </div>
 
 
-    <form  method="POST">
+    <form action="{% url 'system:addSemester' %}" method="post">
 
         {% csrf_token %}
     <div class="form-group-inner">
-    <label>Faculty Name</label>
-      {{form.faculty_name}}
+    <label>Session Name</label>
+      {{form.sid}}
+    </div>
+
+        <div class="form-group-inner">
+    <label>Semester Name</label>
+      {{form.semester_name}}
     </div>
 
     <div class="login-btn-inner">
@@ -109,10 +114,11 @@
     </div>
                  </div>
     <!-- create faculty here -->
+          <h1>Semester Record</h1>
 {% load render_table from django_tables2 %}
                        <!-- show data -->
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-{% render_table faculty %}
+{% render_table semester %}
 
                         </div>
               <!-- show ends here --->

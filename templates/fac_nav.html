@@ -1,19 +1,32 @@
-   <li class="active">
-                            <a class="has-arrow" href="index.html">
+     {% url 'system:fac_view' as faculty %}
+     {% url 'system:dept' as department %}
+    {% url 'system:session_create' as session %}
+
+<li class="{% if 'faculty' in request.path %} active {% endif %}">
+                            <a class="has-arrow" href="{% url 'system:fac_view' %}">
 								   <i class="icon nalika-home icon-wrap"></i>
-								   <span class="mini-click-non">Faculty</span>
+								   <span class="mini-click-non">Faculty </span>
 								</a>
                             <ul class="submenu-angle" aria-expanded="true">
                                 <li><a title="Dashboard v.1" href="{% url 'system:fac_create' %}"><span class="mini-sub-pro">Add New</span></a></li>
                                 <li><a title="Analytics" href="{% url 'system:fac_view' %}"><span class="mini-sub-pro">View</span></a></li>
                              </ul>
                         </li>
-                        <li>
-                            <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
+
+              <li class="{% if 'department' in request.path %} active {% endif %}">
+                            <a class="has-arrow" href="{% url 'system:dept_create' %}" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
                                 <span class="mini-click-non">Department</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="Inbox" href="mailbox.html"><span class="mini-sub-pro">Inbox</span></a></li>
-                                <li><a title="View Mail" href="mailbox-view.html"><span class="mini-sub-pro">View Mail</span></a></li>
-                                <li><a title="Compose Mail" href="mailbox-compose.html"><span class="mini-sub-pro">Compose Mail</span></a></li>
+                                <li><a title="Inbox" href="{% url 'system:dept_create' %}"><span class="mini-sub-pro">Add New</span></a></li>
+                                <li><a title="Inbox" href="{% url 'system:dept_create' %}"><span class="mini-sub-pro">View</span></a></li>
+                            </ul>
+                        </li>
+
+                <li class=" {% ifequal request.path session %}active{% endifequal %}">
+                            <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
+                                <span class="mini-click-non">Session/Semester</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Inbox" href="{% url 'system:session_create' %}"><span class="mini-sub-pro">Session</span></a></li>
+                                <li><a title="Inbox" href="{% url 'system:create_semester' %}"><span class="mini-sub-pro">Semester</span></a></li>
                             </ul>
                         </li>

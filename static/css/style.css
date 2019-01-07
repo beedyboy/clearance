@@ -50,7 +50,9 @@ margin: 0;
 padding: 0
 }
 .clear{clear:both}
-body {}
+body {
+    color:grey;
+}
 
 .mg-tb-30{
 	margin:30px 0px;
@@ -2174,7 +2176,7 @@ ul.tab-custon-design li.active a, ul.tab-review-design li.active a{
 }
 .form-group-inner label{
 	font-size:14px;
-	color:#303030;
+	color:#fff;
 }
 .form-group-inner input[type="email"], .form-group-inner input[type="password"], .form-group-inner input[type="text"], .form-select-list .custom-select-value{
 	font-size:14px;
@@ -2566,7 +2568,7 @@ ul.tab-custon-design li.active a, ul.tab-review-design li.active a{
     font-size: 14px;
     margin-bottom: 15px;
     height: 14px;
-    color: #303030;
+    color: #fff;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 5px 0px;
 }
@@ -2913,7 +2915,7 @@ ul.mailbox-list li:hover a, ul.h-list li:hover a {
 }
 .main-sparkline8-hd h1, .main-sparkline9-hd h1, .main-spark7-hd h1, .main-sparkline10-hd h1, .main-sparkline11-hd h1, .main-sparkline12-hd h1, .main-sparkline13-hd h1, .main-sparkline14-hd h1{
 	font-size:20px;
-	color:#303030;
+	color:grey;
 }
 .basic-choropleth {
     height: 400px;
@@ -3292,11 +3294,11 @@ ul.mailbox-list li:hover a, ul.h-list li:hover a {
 }
 .form-group-inner label{
 	font-size:14px;
-	color:#303030;
+	color:#fff;
 }
 .form-group-inner input[type="email"], .form-group-inner input[type="password"], .form-group-inner input[type="text"], .form-select-list .custom-select-value{
 	font-size:14px;
-	color:#303030;
+	color:red;
 	border:1px solid #ddd;
 	outline:none;
 	border-radius:0px;
