@@ -15,11 +15,14 @@ urlpatterns = [
     path('department', views.create_dept, name ="dept"), #for url like system/department/new
     path('department/new', views.create_dept, name ="dept_create"), #for url like system/department/new
     path('department/save', views.add_dept, name ="addDept"), #for url like system/department/save
+    path('department/<int:pk>/edit', views.dept_edit, name="dept_edit"), #for url like system/session/1/edit
 
     path('session/new', views.create_session, name ="session_create"), #for url like system/session/new
     path('session/save', views.add_session, name ="addSession"), #for url like system/session/save
     path('session/<int:pk>/edit', views.session_edit, name="session_edit"), #for url like system/session/1/edit
 
-     path('semester/new', views.create_semester, name ="create_semester"), #for url like system/semester/new
+    path('semester/new', views.create_semester, name ="create_semester"), #for url like system/semester/new
     path('semester/save', views.add_semester, name ="addSemester"), #for url like system/semester/save
+    path('semester/<int:pk>/edit', views.semester_edit, name="semester_edit"), #for url like system/session/1/edit
+    path('semester/<pk>/current', views.current_session_semester, name="current_session_semester"), #for url like system/session/1/edit
 ]

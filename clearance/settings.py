@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'account',
     'system',
     'lecturer',
+    'bursary',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ WSGI_APPLICATION = 'clearance.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'abc',
         'NAME': 'clearance',
         'USER': 'root',
         'PASSWORD': '',

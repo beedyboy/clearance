@@ -22,3 +22,5 @@ Installation
 
     In your templates, load the bootstrap3 library and use the bootstrap_* tags:
 
+Using choices model on our software, you need to install this on the system
+    pip install django-model-utils

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .systemform import FacultyCreationForm, DepartmentCreationForm, SessionCreationForm,SemesterCreationForm
 from django.utils import timezone
 from django.conf import settings
-from .models import FacultyData, DepartmentData, SessionData, SemesterData
+from .models import FacultyData, DepartmentData, SessionData, SemesterData, SettingsData
 from django.contrib import messages
 from django_tables2 import RequestConfig
 from django.core.paginator import Paginator
@@ -96,7 +96,7 @@ def create_dept(request):
     context = {}
     table = DepartmentTable(DepartmentData.objects.all())
     RequestConfig(request, paginate={'per_page': 10 }).configure(table)
-    context = {"form": DepartmentCreationForm, 'faculty': table, 'app': app}
+    context = {"form": DepartmentCreationForm, 'department': table, 'app': app}
 
     return render(request, 'dept/create.html', context)
 
@@ -112,6 +112,25 @@ def add_dept(request):
             register.save()
             messages.add_message(request, messages.SUCCESS, "Department added successfully")
     return redirect('system:dept_create')
+
+def dept_edit(request, pk):
+    app = settings.CONFIG
+    post = get_object_or_404(DepartmentData, pk=pk)
+    if request.method == 'POST':
+        #then form is trying to save
+        form = DepartmentCreationForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.WARNING, "Department record updated successfully")
+        return redirect('system:dept')
+    else:
+        #bring edit form out
+        form = DepartmentCreationForm(instance=post)
+        table = DepartmentTable(DepartmentData.objects.all())
+        RequestConfig(request, paginate={'per_page': 10}).configure(table)
+        context = {"form": form, 'department': table, 'app': app}
+    return render(request, 'dept/editdept.html', context)
+
 
 
 def create_session(request):
@@ -162,7 +181,6 @@ def create_semester(request):
         table = SemesterTable(SemesterData.objects.all())
         RequestConfig(request, paginate={'per_page': 10}).configure(table)
         context = {"form": SemesterCreationForm, 'semester': table, 'app': app}
-
         return render(request, 'semester/semester.html', context)
 
 def add_semester(request):
@@ -175,5 +193,36 @@ def add_semester(request):
             register = SemesterData(sid = form.cleaned_data['sid'],semester_name = form.cleaned_data['semester_name'])
             register.save()
             messages.add_message(request, messages.SUCCESS, "Semester added successfully")
-    return redirect('system:create_semester ')
+    return redirect('system:create_semester')
 
+def semester_edit(request, pk):
+
+    app = settings.CONFIG
+    post = get_object_or_404(SemesterData, pk=pk)
+
+    if request.method == 'POST':
+        #then form is trying to save
+        form = SemesterCreationForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.WARNING, "Semester record updated successfully")
+        return redirect('system:create_semester')
+    else:
+        #bring edit form out
+        form = SemesterCreationForm(instance=post)
+        table = SemesterTable(SemesterData.objects.all())
+        RequestConfig(request, paginate={'per_page': 10}).configure(table)
+        context = {"form": form, 'semester': table, 'app': app}
+    return render(request, 'semester/editsemester.html', context)
+
+def current_session_semester(request, pk):
+   # post = get_object_or_404(SettingsData, pk=pk)
+    if SettingsData.objects.all().count() <= 0:
+
+        SettingsData.objects.create(current_id = pk)
+        
+    else:
+        data = SettingsData.objects.get(id=1)
+        data.current_id= pk
+        data.save()
+    return redirect('system:create_semester')

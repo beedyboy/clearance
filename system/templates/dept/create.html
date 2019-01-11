@@ -48,7 +48,7 @@
          <div class="container-fluid">
 
           <div class="row">
-    <!-- create faculty here -->
+    <!-- create department here -->
                  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
     <div class="sparkline9-list mt-b-30">
     <div class="sparkline9-hd">
@@ -113,7 +113,7 @@
     </div>
                  </div>
     <!-- create faculty here -->
-          <h1>Faculty record</h1>
+          <h1>Department record</h1>
 {% load render_table from django_tables2 %}
           {% load bootstrap3 %}
                        <!-- show data -->
@@ -124,7 +124,7 @@
                                 {% bootstrap_button 'filter' %}
                             </form>
                     {% endif %}
-{% render_table faculty %}
+{% render_table department %}
 
                         </div>
               <!-- show ends here --->

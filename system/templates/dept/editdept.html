@@ -2,7 +2,7 @@
     {% extends 'base_layout.html'%}
 {# set the value of the page title#}
    {%block title %}
-       Semester | Create | View | Edit
+       Department | Create | View
     {%endblock%}
 
 {# include extra css for datatable#}
@@ -33,7 +33,7 @@
            </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <ul class="breadcome-menu">
-                    <li><a href="#">create</a> <span class="bread-slash">/</span>
+                    <li><a href="{% url 'system:dept_create' %}">create</a> <span class="bread-slash">/</span>
                     </li>
                     <li><span class="bread-blod">view</span>
                     </li>
@@ -48,12 +48,12 @@
          <div class="container-fluid">
 
           <div class="row">
-    <!-- create Semester here -->
+    <!-- create faculty here -->
                  <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
     <div class="sparkline9-list mt-b-30">
     <div class="sparkline9-hd">
     <div class="main-sparkline9-hd">
-    <h2>Create New Semester</h2>
+    <h2>Update Department</h2>
     </div>
     </div>
     <div class="sparkline9-graph">
@@ -81,22 +81,21 @@
         </div>
 
 
-    <form action="{% url 'system:addSemester' %}" method="post">
+    <form  method="POST">
 
         {% csrf_token %}
-    <div class="form-group-inner">
-    <label>Session Name</label>
-      {{form.sid}}
+   <div class="form-group-inner">
+    <label>Faculty Name</label>
+      {{form.fid}}
     </div>
-
-        <div class="form-group-inner">
-    <label>Semester Name</label>
-      {{form.semester_name}}
+  <div class="form-group-inner">
+    <label>Department Name</label>
+      {{form.dept_name}}
     </div>
 
     <div class="login-btn-inner">
     <div class="inline-remember-me">
-    <button class="btn btn-sm btn-primary pull-right login-submit-cs" type="submit">Save</button>
+    <button class="btn btn-sm btn-primary pull-right login-submit-cs" type="submit">Update</button>
 
     </div>
     </div>
@@ -114,12 +113,11 @@
     </div>
                  </div>
     <!-- create faculty here -->
-          <h1>Semester Record</h1>
-
+          <h1>Department Record</h1>
+{% load render_table from django_tables2 %}
                        <!-- show data -->
                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                  {% load render_table from django_tables2 %}
-                         {% render_table semester %}
+{% render_table department %}
 
                         </div>
               <!-- show ends here --->
