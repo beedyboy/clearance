@@ -1,0 +1,186 @@
+{# extend the base layout by includeing it#}
+    {% extends 'base_layout.html'%}
+{# set the value of the page title#}
+   {%block title %}
+       Bursary | Create | Set
+    {%endblock%}
+
+{# include extra css for datatable#}
+{% block style %}
+
+
+{% endblock %}
+{# include bursary module navigation menu#}
+    {% block module_nav %}
+        {% include 'bus_nav.html'%}
+
+    {%endblock%}
+
+{# include page breadcrum information#}
+    {% block pageinfo %}
+     <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <div class="breadcomb-wp">
+                    <div class="breadcomb-icon">
+                    <i class="icon nalika-home"></i>
+                    </div>
+                        <div class="breadcomb-ctn">
+                            <h2>Fees Management</h2>
+                            <p>{{ app.app.NAME }}</p>
+                        </div>
+                </div>
+           </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <ul class="breadcome-menu">
+                    <li><a href="#">create</a> <span class="bread-slash">/</span>
+                    </li>
+                    <li><span class="bread-blod">view</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    {% endblock %}
+{#include the page main content#}
+    {%block content %}
+
+         <div class="container-fluid">
+
+          <div class="row">
+    <!-- create Semester here -->
+                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+    <div class="sparkline9-list mt-b-30">
+    <div class="sparkline9-hd">
+    <div class="main-sparkline9-hd">
+    <h2>Create Fees</h2>
+    </div>
+    </div>
+    <div class="sparkline9-graph">
+    <div class="basic-login-form-ad">
+
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="basic-login-inner">
+
+
+        <div>
+            {% if messages %}
+            <ul class="messages">
+            {% for msg in messages %}
+           <li>
+                <div class="alert alert-{{ msg.level_tag }}" role="alert">
+                {{ msg.message }}
+            </div>
+           </li>
+            {% endfor %}
+
+            </ul>
+
+            {% endif %}
+        </div>
+
+
+    <form  method="post">
+
+        {% csrf_token %}
+    <div class="form-group-inner">
+    <label>Faculty Name</label>
+      {{form.fid}}
+    </div>
+
+<div class="form-group-inner">
+    <label>Department Name</label>
+      {{form.did}}
+    </div>
+
+<div class="form-group-inner">
+    <label>Session Name</label>
+      {{form.sid}}
+    </div>
+
+        <div class="form-group-inner">
+    <label>Amount</label>
+      {{form.amount}}
+    </div>
+
+    <div class="login-btn-inner">
+    <div class="inline-remember-me">
+    <button class="btn btn-sm btn-primary pull-right login-submit-cs" type="submit">Save</button>
+
+    </div>
+    </div>
+    </form>
+
+
+    </div>
+    </div>
+
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+                 </div>
+    <!-- create faculty here -->
+          <h1>Record</h1>
+
+                       <!-- show data -->
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                  {% load render_table from django_tables2 %}
+                    {% render_table fees %}
+
+                        </div>
+              <!-- show ends here --->
+          </div>
+
+
+        </div>
+
+
+
+    </form>
+
+
+    {%endblock%}
+
+
+
+{%  block script %}
+    <script>
+    $("#id_fid").change(function() {
+        //console.log($(this).val());
+       fid = ($(this).val());
+        var $select = $("#id_did");
+                if(fid == "" || fid == null){
+                    row =  '<option value="">--Select Faculty First--</option>';
+                     $("#id_did").html(row);
+                }
+       $.ajax({
+           url:  '{% url "bursary:get_department"  %}',
+           data: {
+               'fid': fid
+           },
+           dataType: 'json',
+           success: function (data) {
+               console.log(data.department)
+              // $("#id_did").html(data['department'])
+                $select.find('option').remove()
+               let rows = '';
+                 rows +=  '<option value="">--Select Department--</option>';
+               data.department.forEach(department => {
+                   rows +=  '<option value=' + department.id + '>'+ department.dept_name+ '</option>';
+               });
+
+
+               $("#id_did").append(rows);
+
+           }
+
+       })
+
+
+    })
+    </script>
+
+{% endblock %}

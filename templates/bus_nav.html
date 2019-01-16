@@ -1,0 +1,29 @@
+    {% url 'bursary:create_fee' as bursary %}
+  {% comment %}    {% url 'system:dept' as department %}
+    {% url 'system:session_create' as session %}{% endcomment %}
+
+<li class="{% if 'bursary' in request.path %} active {% endif %}">
+                            <a class="has-arrow" href="{% url 'bursary:create_fee' %}">
+								   <i class="icon nalika-home icon-wrap"></i>
+								   <span class="mini-click-non">Create Fee </span>
+								</a>
+
+                        </li>
+
+           {% comment %}   <li class="{% if 'department' in request.path %} active {% endif %}">
+                            <a class="has-arrow" href="{% url 'system:dept_create' %}" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
+                                <span class="mini-click-non">Department</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Inbox" href="{% url 'system:dept_create' %}"><span class="mini-sub-pro">Add New</span></a></li>
+                                <li><a title="Inbox" href="{% url 'system:dept_create' %}"><span class="mini-sub-pro">View</span></a></li>
+                            </ul>
+                        </li>
+
+                <li class=" {% ifequal request.path session %}active{% endifequal %}">
+                            <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
+                                <span class="mini-click-non">Session/Semester</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="Inbox" href="{% url 'system:session_create' %}"><span class="mini-sub-pro">Session</span></a></li>
+                                <li><a title="Inbox" href="{% url 'system:create_semester' %}"><span class="mini-sub-pro">Semester</span></a></li>
+                            </ul>
+                        </li>{% endcomment %}

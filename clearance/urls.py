@@ -27,9 +27,9 @@ from django.conf import settings
 
 urlpatterns = [
 
-  #  path('articles/', include('articles.urls')),
     path('account/', include('account.urls')),
     path('system/', include('system.urls')),
+    path('bursary/', include('bursary.urls')),
     path('admin/', admin.site.urls),
     path('',views.home_page),
    # path('',article_views.article_list, name="home")
