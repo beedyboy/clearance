@@ -6,7 +6,8 @@ from .models import FacultyData, DepartmentData, SessionData, SemesterData, Sett
 from django.contrib import messages
 from django_tables2 import RequestConfig
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+#from django.contrib.auth.decorators import
+from django.http import HttpResponse, HttpResponseRedirect
 #import django_filters
 from .tables import FacultyTable, DepartmentTable, SessionTable, SemesterTable
 # Create your views here.
@@ -226,3 +227,19 @@ def current_session_semester(request, pk):
         data.current_id= pk
         data.save()
     return redirect('system:create_semester')
+
+
+def employee_add(request):
+    context = {}
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        context['user_form'] = user_form
+        if user_form.is_valid():
+            u = user_form.save()
+            return HttpResponseRedirect(reverse('employee_list'))
+        else:
+            return render(request, 'employee/add.html', context)
+    else:
+        user_form = UserForm()
+        context['user_form'] = user_form
+        return render(request, 'employee/add.html', context)

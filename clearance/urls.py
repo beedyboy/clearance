@@ -23,15 +23,21 @@ from.import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.conf import settings
-#from articles import views as article_views
+from account.views import user_login, user_logout, success
 
 urlpatterns = [
+
+    path('', user_login),
+
+    path('login/', user_login, name="user_login"),
+    path('success/', success, name="user_success"),
+    path('logout/', user_logout, name="user_logout"),
 
     path('account/', include('account.urls')),
     path('system/', include('system.urls')),
     path('bursary/', include('bursary.urls')),
     path('admin/', admin.site.urls),
-    path('',views.home_page),
+
    # path('',article_views.article_list, name="home")
 
 ]#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

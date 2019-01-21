@@ -1,0 +1,31 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>{% block title %} {%endblock%} </title>
+
+{% include  'base_head.html' %}
+<!--
+	============================================ -->
+        {% block style %}
+
+        {% endblock %}
+</head>
+<body>
+
+  <!-- main contents here -->
+                {% block content %}
+
+
+                {%endblock%}
+
+
+{% include  'base_foot.html' %}
+<script src="{% static 'js/main.js'%}"></script>
+      {% block script %}
+
+        {% endblock %}
+</body>
+</html>
