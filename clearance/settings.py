@@ -40,16 +40,16 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     'bootstrap3',
-    'dajaxice',
-    'dajax',
-    #'account',
+    # 'dajaxice',
+    # 'dajax',
+    'account',
     'system',
     'lecturer',
     'bursary',
-    'account.apps.UserConfig',
+    # 'account.apps.UserConfig',
 ]
 
-AUTH_USER_MODEL = 'account.CustomUser'
+AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,8 +88,8 @@ WSGI_APPLICATION = 'clearance.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'abc',
-        # 'NAME': 'clearance',
+        # 'NAME': 'abc',
+        'NAME': 'clearance',
         'USER': 'beedy',
         'PASSWORD': 'kaydee',
         'HOST': 'localhost',

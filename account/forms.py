@@ -1,58 +1,105 @@
+# accounts.forms.py
 from django import forms
-from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
+from .models import User
+
+#
+# class RegisterForm(forms.ModelForm):
+#     password = forms.CharField(widget=forms.PasswordInput)
+#     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+#
+#     class Meta:
+#         model = User
+#         fields = ('user_id',)
+#
+#     def clean_user_id(self):
+#         user_id = self.cleaned_data.get('user_id')
+#         qs = User.objects.filter(user_id=user_id)
+#         if qs.exists():
+#             raise forms.ValidationError("user_id is taken")
+#         return user_id
+#
+#     def clean_password2(self):
+#         # Check that the two password entries match
+#         password1 = self.cleaned_data.get("password1")
+#         password2 = self.cleaned_data.get("password2")
+#         if password1 and password2 and password1 != password2:
+#             raise forms.ValidationError("Passwords don't match")
+#         return password2
 
 
-class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    role = forms.ModelChoiceField(queryset=Group.objects.all())
-    
+class UserAdminCreationForm(forms.ModelForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name',
-                  'email', 'username',
-                  'password']
-        # excludes = ['']
-        
-        label = {
-            'password': 'Password'
-        }
+        fields = ('user_id',   'first_name','last_name',)
 
-    def __init__(self, *args, **kwargs):
-        if kwargs.get('instance'):
-            # We get the 'initial' keyword argument or initialize it
-            # as a dict if it didn't exist.                
-            initial = kwargs.setdefault('initial', {})
-            # The widget for a ModelMultipleChoiceField expects
-            # a list of primary key for the selected data.
-            if kwargs['instance'].groups.all():
-                initial['role'] = kwargs['instance'].groups.all()[0]
-            else:
-                initial['role'] = None
+    def clean_password2(self):
+        # Check that the two password entries match
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
 
-        forms.ModelForm.__init__(self, *args, **kwargs)
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(UserAdminCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
 
-    def save(self):
-        password = self.cleaned_data.pop('password')
-        role = self.cleaned_data.pop('role')
-        u = super().save()
-        u.groups.set([role])
-
-        u.set_password(password)
-        u.save()
-        return u
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
-        model = CustomUser
-        fields = ('username', 'email')
-
-
-class CustomUserChangeForm(UserChangeForm):
+class UserAdminChangeForm(forms.ModelForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+    password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = CustomUser
-        fields = ('username', 'email')
+        model = User
+        fields = ('user_id','first_name','last_name', 'password', 'active', 'admin')
+
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        # This is done here, rather than on the field, because the
+        # field does not have access to the initial value
+        return self.initial["password"]
+
+class LoginForm(forms.Form):
+    user_id = forms.CharField(label="User Id", widget=forms.TextInput)
+    password = forms.CharField(  widget=forms.PasswordInput)
+
+class RegisterForm(forms.ModelForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('user_id',   'first_name','last_name',)
+
+    def clean_password2(self):
+        # Check that the two password entries match
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
+
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(UserAdminCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        # user.active = False #send confirmation email
+        if commit:
+            user.save()
+        return user
