@@ -24,3 +24,6 @@ Installation
 
 Using choices model on our software, you need to install this on the system
     pip install django-model-utils
+
+ #mysqlclients needs to be installed
+ pip install mysqlclient
