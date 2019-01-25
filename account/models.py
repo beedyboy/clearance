@@ -4,6 +4,7 @@ from django.db import models
 from system.models import SemesterData, DepartmentData
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.http import HttpResponse
 
 # Create your models here.
 
@@ -78,7 +79,7 @@ class User(AbstractBaseUser):
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
     USERNAME_FIELD = 'user_id'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'user_type']
 
     objects = UserManager()
 
@@ -87,6 +88,9 @@ class User(AbstractBaseUser):
 
     def get_full_name(self):
         return self.first_name + " " + self.last_name
+
+    def get_user_type(self):
+            return self.user_type
 
     def has_perm(self, perm, obj=None):
         return True
@@ -113,12 +117,23 @@ class StudentProfile(models.Model):
     dept_name = models.ForeignKey(DepartmentData, on_delete=models.SET_NULL, null=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
+    def __str__(self):
+        return self.user.first_name
 
-@receiver(post_save, sender=User)
+
+# @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        StudentProfile.objects.create(user=instance)
+        if instance.admin:
+            pass
+        else:
+            data = StudentProfile.id
+            print(data)
+            StudentProfile.objects.create(user=instance)
+    # else:
+    #     instance.StudentProfile.save()
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()

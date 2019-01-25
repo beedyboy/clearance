@@ -1,21 +1,38 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login, logout
+
+from django.urls import reverse_lazy
+# from django.contrib.auth.models import User
+# from django.contrib.auth import authenticate,login, logout
+
+from .models import StudentProfile
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
-from .forms import RegisterForm, LoginForm
+from .forms import LoginForm, CreateStudentForm
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.views.generic import CreateView, FormView
 from django.utils.http import is_safe_url
+
+
+from django.conf import settings
+from django_tables2 import RequestConfig
+from system.models import FacultyData, DepartmentData, SessionData, SemesterData, SettingsData
+
+#import record tables
+
+from system.tables import FacultyTable, DepartmentTable, SessionTable, SemesterTable
+# from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 # Create your views here.
 
 class LoginView(FormView):
+
     form_class = LoginForm
     success_url = '/'
-    template_name = 'login.html'
+    template_name = 'accounts/login.html'
 
     def form_valid(self, form):
         request = self.request
@@ -36,49 +53,47 @@ class LoginView(FormView):
                 return redirect(redirect_path)
             else:
                 return redirect("/")
-        return super(LoginView, self).form_invalid()
-#
-# def login_page(request):
-#     form = LoginForm(request.POST or None)
-#     context = {
-#         "form": form
-#     }
-#     next_ = request.GET.get('next')
-#     next_post = request.POST.get('next')
-#     redirect_path = next_ or next_post or None
-#     if form.is_valid():
-#         user_id = form.cleaned_data.get('user_id')
-#         password = form.cleaned_data.get('password')
-#         user = authenticate(request, user_id = user_id, password=password)
-#         if user is not None:
-#             login(request, user)
-#             try:
-#                 del request.session['guest_user_id']
-#             except:
-#                 pass
-#             if is_safe_url(redirect_path, request.get_host()):
-#                 return redirect(redirect_path)
-#             else:
-#                 return redirect("/")
-#         else:
-#          #return an 'invalid login error message
-#          print("Error")
-#     return render()
+        return super(LoginView, self).form_invalid(form)
 
-class RegisterView(CreateView):
-    form_class = RegisterForm
-    template_name = 'register.html'
-    success_url = '/login'
 
-# User = get_user_model()
-# def register_page(request):
-#     form = RegisterForm(request.POST or None)
-#     context = {
-#         "form": form
-#     }
-#     if form.is_valid():
-#         form.save()
-#     return render(request, 'register.html', context)
+# class CreateStudentView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class CreateStudentView( CreateView):
+    login_url = reverse_lazy('account:login')
+    form_class = CreateStudentForm
+    template_name = 'accounts/student/signup.html'
+    success_message = 'New new user profile has been created'
+    success_url = reverse_lazy('account:signup')
+
+    def get_context_data(self, **kwargs):
+
+        table = FacultyTable(FacultyData.objects.all())
+        RequestConfig(self.request, paginate={'per_page': 10}).configure(table)
+
+        context = super(CreateStudentView, self).get_context_data(**kwargs)
+        context['app'] = settings.CONFIG
+        context['faculty'] = table
+        return context
+
+    def form_valid(self, form):
+        c = {'form': form, 'app': settings.CONFIG}
+        user = form.save(commit=False)
+        # Cleaned(normalized) data
+        dept_name = form.cleaned_data['dept_name']
+        semester = form.cleaned_data['semester']
+        password = form.cleaned_data['password']
+        repeat_password = form.cleaned_data['repeat_password']
+        if password != repeat_password:
+            messages.error(self.request, "Passwords do not Match", extra_tags='alert alert-danger')
+            return render(self.request, self.template_name, c)
+        #set password
+        user.set_password(password)
+        user.user_type = 1
+        user.save()
+        # Create UserProfile model
+        StudentProfile.objects.create(user=user, dept_name=dept_name, semester=semester, avatar = form.cleaned_data['avatar'])
+        return super(CreateStudentView, self).form_valid(form)
+
+
 
 def user_login(request):
     context = {}

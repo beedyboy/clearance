@@ -1,0 +1,10 @@
+  <form action="{% url 'account:signup_student' %}" method="post"  enctype="multipart/form-data">
+{% csrf_token %}
+      {{ form.as_p }}
+    <div class="login-btn-inner">
+    <div class="inline-remember-me">
+    <button class="btn btn-sm btn-primary pull-right login-submit-cs" type="submit">Save</button>
+
+    </div>
+    </div>
+    </form>

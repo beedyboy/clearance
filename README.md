@@ -30,3 +30,6 @@ Using choices model on our software, you need to install this on the system
 
 
     pip install mysqlclient
+
+ #install pillow
+ pip install pillow

@@ -6,9 +6,8 @@ from django.contrib import messages
 from .tables import FeesTable
 from django_tables2 import RequestConfig
 from django.core.paginator import Paginator
-from django.http import HttpResponse
 from django.views.generic.edit import CreateView
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from system.models import FacultyData, DepartmentData, SessionData, SemesterData, SettingsData
 from .models import SchoolFees

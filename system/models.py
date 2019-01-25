@@ -5,6 +5,7 @@ from model_utils import Choices
 
 # Create your models here.
 
+
 class FacultyData(models.Model):
     faculty_name = models.CharField(max_length=30)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -21,6 +22,7 @@ class DepartmentData(models.Model):
     def __str__(self):
         return self.dept_name
 
+
 class SessionData(models.Model):
     session_name = models.CharField(max_length=15)
 
@@ -36,19 +38,28 @@ class SessionData(models.Model):
 #     semester_name = models.CharField(max_length=50)
 #     status = models.CharField(max_length=3, choices=YESNOCHOICE, blank=True, default=YESNOCHOICE[1][0])
 
+
 class SemesterData(models.Model):
     sid = models.ForeignKey(SessionData, on_delete=models.CASCADE)
     semester_name = models.CharField(max_length=50)
+
     def __str__(self):
             return self.semester_name
 
     def current(self):
-        st = SettingsData.objects.get(id=1)
-        if self.id == st.current_id:
-            return "Current Session-Semester"
+
+        if SettingsData.objects.all().count():
+            st = SettingsData.objects.get(id=1)
+            if self.id == st.current_id:
+                return "Current Session-Semester"
+            else:
+                return format_html('<a href="{}"  class="btn btn-primary btn-sm">{}</a>', reverse('system:current_session_semester', args=[self.id]),
+                                   'Set Current')
         else:
-            return format_html('<a href="{}">{}</a>', reverse('system:current_session_semester', args=[self.id] ),   'Set Current')
-            #return format_html('<a href="{}">{}</a>',  self.id, 'Set Current')
+                return format_html('<a href="{}" class="btn btn-primary">{}</a>', reverse('system:current_session_semester', args=[self.id]),
+                                   'Set Current')
+
+                #return format_html('<a href="{}">{}</a>',  self.id, 'Set Current')
            # return format_html('<a href="' + str(self.id) + '/view/' + ' ">Set</a>')
 
 

@@ -25,4 +25,6 @@ urlpatterns = [
     path('semester/save', views.add_semester, name ="addSemester"), #for url like system/semester/save
     path('semester/<int:pk>/edit', views.semester_edit, name="semester_edit"), #for url like system/session/1/edit
     path('semester/<pk>/current', views.current_session_semester, name="current_session_semester"), #for url like system/session/1/edit
+
+    path('get_semester/', views.get_semester, name = "get_semester"),
 ]

@@ -7,7 +7,7 @@ from django.contrib import messages
 from django_tables2 import RequestConfig
 from django.core.paginator import Paginator
 #from django.contrib.auth.decorators import
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 #import django_filters
 from .tables import FacultyTable, DepartmentTable, SessionTable, SemesterTable
 # Create your views here.
@@ -228,6 +228,14 @@ def current_session_semester(request, pk):
         data.save()
     return redirect('system:create_semester')
 
+def get_semester(request):
+
+    sid = request.GET.get('sid', None)
+
+    semester = list(SemesterData.objects.filter(sid_id=sid).values())
+    data = dict()
+    data['semester'] = semester
+    return JsonResponse(data)
 
 def employee_add(request):
     context = {}

@@ -2,8 +2,12 @@ from django import forms
 from . import models
 from .models import FacultyData,SessionData
 #class FacultyCreationForm(forms.Form):
+
+
 class FacultyCreationForm(forms.ModelForm):
-    #faculty_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Faculty Name'}))
+
+     #faculty_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Faculty Name'}))
+
     class Meta:
         model = models.FacultyData
         fields = ['faculty_name']
@@ -12,6 +16,7 @@ class FacultyCreationForm(forms.ModelForm):
             'faculty_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Faculty Name'})
         }
 
+
 class DepartmentCreationForm(forms.ModelForm):
     fid = forms.ModelChoiceField(queryset=FacultyData.objects.all(), empty_label="Select One", widget=forms.Select(attrs={'class': 'form-control'}))
 
@@ -19,7 +24,7 @@ class DepartmentCreationForm(forms.ModelForm):
         model = models.DepartmentData
         fields = ['fid', 'dept_name']
         widgets = {
-            #'fid': forms.Select(attrs={'class': 'form-control'}),
+
            'dept_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Department Name'})
         }
 

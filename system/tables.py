@@ -9,7 +9,7 @@ class FacultyTable(tables.Table):
     view_Action = tables.LinkColumn('system:fac_link_view', text='View', args=[A('pk')], attrs={'a':{'class':'btn btn-primary btn-sm'}, 'td':{'align': 'center'}}, orderable=False)
     class Meta:
         model = FacultyData
-        attrs = {'class':'table table-responsive','border': '2'}
+        attrs = {'class':'table table-hover table-bordered table-responsive'}
         exclude = { 'id', }
         template_name = 'django_tables2/bootstrap4.html'
 
@@ -21,7 +21,7 @@ class DepartmentTable(tables.Table):
     #view_Action = tables.LinkColumn('system:fac_link_view', text='View', args=[A('pk')], attrs={'a':{'class':'btn btn-primary btn-sm'}, 'td':{'align': 'center'}}, orderable=False)
     class Meta:
         model = DepartmentData
-        attrs = {'class':'table table-responsive','border': '2'}
+        attrs = {'class':'table table-hover table-bordered table-responsive'}
         exclude = { 'id', }
 
 
@@ -31,23 +31,25 @@ class SessionTable(tables.Table):
     #current = tables.LinkColumn('system:session_current', accessor=A('current'),  args=[A('pk')], attrs={'a':{'class':'btn btn-primary btn-sm'}, 'td':{'align': 'center'}}, orderable=False)
     class Meta:
         model = SessionData
-        attrs = {'class':'table table-responsive','border': '2'}
+
+        attrs = {'class':'table table-hover table-bordered table-responsive'}
         exclude = { 'id', }
         template_name = 'django_tables2/bootstrap4.html'
 
 
 
 class SemesterTable(tables.Table):
-    sid = tables.Column(verbose_name='Session')
-    semester_name = tables.Column(verbose_name='Semester')
-    edit_Action = tables.LinkColumn('system:semester_edit', text='Edit', args=[A('pk')], attrs={'a':{'class':'btn btn-info btn-sm'}, 'td':{'align': 'center'}}, orderable=False)
+    sid = tables.Column(verbose_name='Session',  attrs={'th': {'class': 'danger'}})
+    semester_name = tables.Column(verbose_name='Semester',  attrs={'th': {'class': 'danger'}})
+    edit_Action = tables.LinkColumn('system:semester_edit', text='Edit', args=[A('pk')], attrs={'a':{'class':'btn btn-info btn-sm'}, 'td':{'align': 'center'}, 'th': {'class': 'danger'}}, orderable=False)
     #view_Action = tables.LinkColumn('system:fac_link_view', text='View', args=[A('pk')], attrs={'a':{'class':'btn btn-primary btn-sm'}, 'td':{'align': 'center'}}, orderable=False)
-    current = tables.Column(orderable=False)
+    current = tables.Column(orderable=False,  attrs={'th': {'class': 'danger'}})
 
     class Meta:
         model = SemesterData
-        attrs = {'class':'table table-responsive','border': '2'}
-        exclude = { 'id', }
+        attrs = {'class':'table table-hover table-bordered table-responsive'}
+        exclude = {'id', }
         empty_text = _("There are no departments yet")
+        template_name = 'django_tables2/bootstrap4.html'
 
 
